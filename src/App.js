@@ -5,17 +5,20 @@ const Calculator = () => {
   const [input, setInput] = useState('');
   const [result, setResult] = useState('');
 
-  const handleButtonClick = (value) => {
+  const handleClick = (value) => {
     if (value === '=') {
       try {
-        setResult(eval(input));
+        const calculation = new Function(`return (${input})`);
+        setResult(calculation());
       } catch (error) {
         setResult('Error');
       }
     } else if (value === 'C') {
+      // Clear input and result
       setInput('');
       setResult('');
     } else {
+      // Append value to input
       setInput((prevInput) => prevInput + value);
     }
   };
@@ -25,11 +28,13 @@ const Calculator = () => {
       <input className="input" type="text" value={input} readOnly />
       <input className="result" type="text" value={result} readOnly />
       <div className="buttons">
-        {[7, 8, 9, '+', 4, 5, 6, '-', 1, 2, 3, '*', 'C', 0, '=', '/'].map((value) => (
-          <button key={value} onClick={() => handleButtonClick(value)}>
+        {[7, 8, 9, '+', 4, 5, 6, '-', 1, 2, 3, '*', 'C', 0, '='].map((value) => (
+          <button key={value} onClick={() => handleClick(value)}>
             {value}
           </button>
         ))}
+        {/* Division button */}
+        <button onClick={() => handleClick('/')}>/</button>
       </div>
     </div>
   );
