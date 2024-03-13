@@ -8,8 +8,12 @@ const Calculator = () => {
   const handleClick = (value) => {
     if (value === '=') {
       try {
+<<<<<<< HEAD
         const calculation = new Function(`return (${input})`);
         setResult(calculation());
+=======
+        setResult(eval(input)); // Use eval() here
+>>>>>>> ff1ed98 (eval added again ')
       } catch (error) {
         setResult('Error');
       }
