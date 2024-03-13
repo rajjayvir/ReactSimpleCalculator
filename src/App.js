@@ -51,7 +51,7 @@ function Calculator() {
       </form>
 
       <div className="keypad">
-        <button onClick={clear} id="clear">Clear</button>
+        <button onClick={clear} id="clear">AC</button>
         <button name="+" onClick={handleClick}>+</button>
         <button name="-" onClick={handleClick}>-</button>
         <button name="*" onClick={handleClick}>*</button>
@@ -67,7 +67,7 @@ function Calculator() {
         <button name="1" onClick={handleClick}>1</button>
         <button name="0" onClick={handleClick}>0</button>
         <button name="." onClick={handleClick}>.</button>
-        <button onClick={calculate} id="result">Result</button>
+        <button onClick={calculate} id="result">=</button>
       </div>
 
     </div>
