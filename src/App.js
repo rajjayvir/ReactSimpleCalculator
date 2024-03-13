@@ -1,44 +1,77 @@
 import React, { useState } from 'react';
-import './App.css'; // Import CSS file for styling
+import './App.css';
 
-const Calculator = () => {
-  const [input, setInput] = useState('');
-  const [result, setResult] = useState('');
+function Calculator() {
+  const [input, setInput] = useState("");
+  const [result, setResult] = useState("");
 
-  const handleClick = (value) => {
-    if (value === '=') {
-      try {
-        const calculation = new Function(`return (${input})`);
-        setResult(calculation());
-        setResult(eval(input)); // Use eval() here
-      } catch (error) {
-        setResult('Error');
+  const handleClick = (e) => {
+    setInput(input.concat(e.target.name));
+  }
+
+  const clear = () => {
+    setInput("");
+    setResult("");
+  }
+
+  const calculate = () => {
+    const operators = ['+', '-', '*', '/'];
+    let operator;
+    let numbers;
+
+    operators.forEach((op) => {
+      if (input.includes(op)) {
+        operator = op;
+        numbers = input.split(op);
       }
-    } else if (value === 'C') {
-      // Clear input and result
-      setInput('');
-      setResult('');
-    } else {
-      // Append value to input
-      setInput((prevInput) => prevInput + value);
+    });
+
+    switch (operator) {
+      case '+':
+        setResult(Number(numbers[0]) + Number(numbers[1]));
+        break;
+      case '-':
+        setResult(Number(numbers[0]) - Number(numbers[1]));
+        break;
+      case '*':
+        setResult(Number(numbers[0]) * Number(numbers[1]));
+        break;
+      case '/':
+        setResult(Number(numbers[0]) / Number(numbers[1]));
+        break;
+      default:
+        setResult("Error");
     }
-  };
+  }
 
   return (
-    <div className="calculator">
-      <input className="input" type="text" value={input} readOnly />
-      <input className="result" type="text" value={result} readOnly />
-      <div className="buttons">
-        {[7, 8, 9, '+', 4, 5, 6, '-', 1, 2, 3, '*', 'C', 0, '='].map((value) => (
-          <button key={value} onClick={() => handleClick(value)}>
-            {value}
-          </button>
-        ))}
-        {/* Division button */}
-        <button onClick={() => handleClick('/')}>/</button>
+    <div className="container">
+      <form>
+        <input type="text" value={result ? result : input} />
+      </form>
+
+      <div className="keypad">
+        <button onClick={clear} id="clear">Clear</button>
+        <button name="+" onClick={handleClick}>+</button>
+        <button name="-" onClick={handleClick}>-</button>
+        <button name="*" onClick={handleClick}>*</button>
+        <button name="/" onClick={handleClick}>/</button>
+        <button name="9" onClick={handleClick}>9</button>
+        <button name="8" onClick={handleClick}>8</button>
+        <button name="7" onClick={handleClick}>7</button>
+        <button name="6" onClick={handleClick}>6</button>
+        <button name="5" onClick={handleClick}>5</button>
+        <button name="4" onClick={handleClick}>4</button>
+        <button name="3" onClick={handleClick}>3</button>
+        <button name="2" onClick={handleClick}>2</button>
+        <button name="1" onClick={handleClick}>1</button>
+        <button name="0" onClick={handleClick}>0</button>
+        <button name="." onClick={handleClick}>.</button>
+        <button onClick={calculate} id="result">Result</button>
       </div>
+
     </div>
   );
-};
+}
 
 export default Calculator;
